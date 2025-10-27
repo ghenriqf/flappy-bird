@@ -97,3 +97,15 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# Visual Studio
+*.sln
+*.slnx
+*.user
+*.userprefs
+*.csproj
+*.unityproj
