@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class MovePipe : MonoBehaviour
 {
-    [SerializeField]  private float speed = 0.65f;
-    void Start()
+    [SerializeField]  private float speed = 0.75f;
+    private void Start()
     {
         
     }
 
-    void Move()
+    private void Move()
     {
         transform.position +=  Vector3.left * (speed * Time.deltaTime);
     }
 
-    void Update()
+    private void Update()
     {
         Move();
         

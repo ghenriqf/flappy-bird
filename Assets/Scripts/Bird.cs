@@ -9,22 +9,22 @@ public class Bird : MonoBehaviour
     [SerializeField] private float rotationSpeed = 10f;
     private AudioSource _audioSource;
     
-    void Start()
+    private void Start()
     {
         rigidBody2d = GetComponent<Rigidbody2D>();
         _audioSource = GetComponent<AudioSource>();
     }
 
-    void Jump()
+    private void Jump()
     {
         if (!Input.GetKeyDown(KeyCode.Space)) return;
         rigidBody2d.linearVelocity = Vector2.up * jumpSpeed;
         
-        if(_audioSource != null) _audioSource.Play();
+        if(_audioSource) _audioSource.Play();
         
     }
     
-    void Update()
+    private void Update()
     {
         Jump();
     }
@@ -42,7 +42,7 @@ public class Bird : MonoBehaviour
         }
     }
 
-    void Die()
+    private static void Die()
     {
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

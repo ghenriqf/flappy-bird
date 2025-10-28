@@ -560,35 +560,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flappy-bird-sprites_10
-      rect:
-        serializedVersion: 2
-        x: 295
-        y: 432
-        width: 32
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: adf4f529d9f99a830800000000000000
-      internalID: 4082970036302467034
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: flappy-bird-sprites_11
       rect:
         serializedVersion: 2
-        x: 329
+        x: 294
         y: 428
-        width: 58
-        height: 25
+        width: 93
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -604,35 +582,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flappy-bird-sprites_12
-      rect:
-        serializedVersion: 2
-        x: 395
-        y: 432
-        width: 49
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d0eac952e4c442270800000000000000
-      internalID: 8224782718007553549
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: flappy-bird-sprites_13
       rect:
         serializedVersion: 2
-        x: 449
-        y: 432
-        width: 42
-        height: 21
+        x: 394
+        y: 431
+        width: 97
+        height: 23
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -692,35 +648,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flappy-bird-sprites_16
-      rect:
-        serializedVersion: 2
-        x: 312
-        y: 409
-        width: 17
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a7e43de8dcca76a10800000000000000
-      internalID: 1902679366451809914
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: flappy-bird-sprites_17
       rect:
         serializedVersion: 2
         x: 351
-        y: 397
-        width: 89
-        height: 24
+        y: 396
+        width: 90
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -890,81 +824,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flappy-bird-sprites_25
-      rect:
-        serializedVersion: 2
-        x: 310
-        y: 405
-        width: 5
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ab89f9e7af4e61c90800000000000000
-      internalID: -7199315189787813702
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flappy-bird-sprites_26
-      rect:
-        serializedVersion: 2
-        x: 316
-        y: 395
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1fce9b7cbcb45eab0800000000000000
-      internalID: -4979490474386920207
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flappy-bird-sprites_27
-      rect:
-        serializedVersion: 2
-        x: 292
-        y: 379
-        width: 21
-        height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f647202c84e5bf370800000000000000
-      internalID: 8357377200101684335
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: flappy-bird-sprites_28
       rect:
         serializedVersion: 2
-        x: 315
+        x: 292
         y: 372
-        width: 11
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 58
+        height: 51
+      alignment: 9
+      pivot: {x: 0.627877, y: 0.45311144}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -973,28 +841,6 @@ TextureImporter:
       bones: []
       spriteID: 5653702ff624f0870800000000000000
       internalID: 8651206457771373925
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flappy-bird-sprites_29
-      rect:
-        serializedVersion: 2
-        x: 328
-        y: 379
-        width: 21
-        height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 09e7d2b4f9899bbf0800000000000000
-      internalID: -308047289569673584
       vertices: []
       indices: 
       edges: []
