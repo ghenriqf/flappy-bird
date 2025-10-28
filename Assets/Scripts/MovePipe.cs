@@ -17,9 +17,5 @@ public class MovePipe : MonoBehaviour
     {
         Move();
         
-        if (transform.position.x < -5f)
-        {
-            Destroy(gameObject);
-        }
     }
 }

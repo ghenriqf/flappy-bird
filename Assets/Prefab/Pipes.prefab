@@ -9,8 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 16696750663184951}
-  - component: {fileID: 4625318582398208481}
-  - component: {fileID: 9094706536554973587}
+  - component: {fileID: -6613804430297824975}
   m_Layer: 0
   m_Name: Pipes
   m_TagString: Untagged
@@ -35,7 +34,7 @@ Transform:
   - {fileID: 6954451651457580724}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4625318582398208481
+--- !u!114 &-6613804430297824975
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,22 +45,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a75138d0f6b22294eaf8149cef468d48, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::MovePipe
   speed: 0.65
---- !u!114 &9094706536554973587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1076167607155452153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ff0a7180f4fd3248a10bcd5bf744632, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  pipePrefab: {fileID: 0}
-  spawnInterval: 2
 --- !u!1 &4221973547032864149
 GameObject:
   m_ObjectHideFlags: 0
