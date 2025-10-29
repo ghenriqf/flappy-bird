@@ -1,0 +1,9 @@
+# Força o GitHub a reconhecer o projeto como C#
+*.cs linguist-language=C#
+
+# Ignora arquivos que não são código para a contagem de linguagem
+*.meta linguist-detectable=false
+*.shader linguist-detectable=false
+*.mat linguist-detectable=false
+*.prefab linguist-detectable=false
+*.unity linguist-detectable=false
