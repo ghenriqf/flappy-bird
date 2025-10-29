@@ -33,17 +33,18 @@ public class Bird : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(0,0,rigidBody2d.linearVelocity.y * rotationSpeed);
     }
-    
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("collision"))
         {
-            Die();
+            FindAnyObjectByType<GameManager>().GameOver();
         }
     }
-
-    private static void Die()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (other.gameObject.CompareTag("score")) {
+            FindAnyObjectByType<GameManager>().IncrementScore();
+        }
     }
 }
