@@ -44,7 +44,6 @@ public class Bird : MonoBehaviour
 
     private static void Die()
     {
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
