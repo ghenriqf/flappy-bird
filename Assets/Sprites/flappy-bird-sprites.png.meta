@@ -827,10 +827,10 @@ TextureImporter:
       name: flappy-bird-sprites_28
       rect:
         serializedVersion: 2
-        x: 292
-        y: 372
-        width: 58
-        height: 51
+        x: 314
+        y: 371
+        width: 14
+        height: 20
       alignment: 9
       pivot: {x: 0.627877, y: 0.45311144}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1963,6 +1963,28 @@ TextureImporter:
       bones: []
       spriteID: 7af8ba2de6a561070800000000000000
       internalID: 8076742413762924455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: flappy-bird-sprites_10
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 395
+        width: 21
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9711ae6d32d388a4e92476cf4fcf7b7e
+      internalID: 4082970036302467034
       vertices: []
       indices: 
       edges: []

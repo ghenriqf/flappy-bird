@@ -1,17 +1,22 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     private int _score = 0;
+    [SerializeField] private Text scoreText;
     public void IncrementScore()
     {
         _score++;
-        Debug.Log("Score: " + _score);
+        if (scoreText != null)
+        {
+            scoreText.text = _score.ToString();
+        }
     }
 
     public void GameOver()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("Space");
     }
 }
