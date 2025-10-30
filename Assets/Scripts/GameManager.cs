@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private int _score = 0;
+    [SerializeField] private MovePipe pipe;
     [SerializeField] private Text scoreText;
     public void IncrementScore()
     {
@@ -16,12 +17,28 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        var pipe = GetComponent<MovePipe>();
-        if (pipe != null)
-            pipe.enabled = false;
+        var parallaxes = FindObjectsByType<Parallax>(FindObjectsSortMode.None);
+        foreach (var p in parallaxes)
+        {
+            p.enabled = false;
+        }
+        
+        var bird = FindAnyObjectByType<Bird>();
+        if (bird != null)
+            bird.enabled = false;
+        
+        var pipes = FindObjectsByType<MovePipe>(FindObjectsSortMode.None);
+        foreach (var p in pipes)
+        {
+            p.enabled = false;
+        }
+        
+        var spawner = FindAnyObjectByType<PipeSpawner>();
+        if (spawner != null)
+            spawner.enabled = false;
         
         Debug.Log("GameOver");
         
-        GameObject.Find("Bird").transform.rotation = Quaternion.Lerp(transform.rotation,Quaternion.Euler(0,0,-90),0.9f);
+        GameObject.Find("Bird").transform.rotation = Quaternion.Euler(0, 0, -90);
     }
 }
