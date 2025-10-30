@@ -1256,7 +1256,6 @@ GameObject:
   - component: {fileID: 2110497447}
   - component: {fileID: 2110497448}
   - component: {fileID: 2110497449}
-  - component: {fileID: 2110497450}
   m_Layer: 0
   m_Name: Bird
   m_TagString: Untagged
@@ -1331,7 +1330,7 @@ Transform:
   m_GameObject: {fileID: 2110497443}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2, z: -1.543}
+  m_LPosition: {x: 0, y: 0.2, z: -1.543}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1415,6 +1414,9 @@ MonoBehaviour:
   rigidBody2d: {fileID: 2110497446}
   jumpSpeed: 2
   rotationSpeed: 10
+  jumpSound: {fileID: 8300000, guid: 2bf3bfccf5838a546ad76806927e1fc7, type: 3}
+  hitSound: {fileID: 8300000, guid: 405e5182407a366468d3bd472a634630, type: 3}
+  pointSound: {fileID: 8300000, guid: 8a3af1e74cb971546916063c62956d7c, type: 3}
 --- !u!95 &2110497449
 Animator:
   serializedVersion: 7
