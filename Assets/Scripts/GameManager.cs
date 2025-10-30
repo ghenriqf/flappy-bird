@@ -3,33 +3,24 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("UI - Gameplay")]
-    public Text scoreText;              
-    
-    [Header("UI - Game Over")]
-    public Text gameOverScoreText;      
-    public Text gameOverBestText;       
-    public RectTransform gameOverUI;
+    public Text scoreText;
+    public GameObject gameOverUI;
+    public Text gameOverScoreText;
+    public Text gameOverBestText;
 
-    [Header("Game Elements")]
     public GameObject getReadySprite;
     public GameObject bird;
     public PipeSpawner spawner;
 
-    [Header("Game Over Animation")]
-    public float gameOverMoveAmount = 50f;
-    public float gameOverMoveSpeed = 5f;
-
-    private Vector3 _gameOverStartPos;
-    private Vector3 _gameOverTargetPos;
-    private bool _moveGameOverUI = false;
-
     private int _score = 0;
     private int _bestScore = 0;
     private bool _isPlaying = false;
+    private bool _isGameOver = false;
 
     void Start()
     {
+        if (_isGameOver) return;
+        
         getReadySprite.SetActive(true);
 
         if (bird != null)
@@ -39,37 +30,18 @@ public class GameManager : MonoBehaviour
             spawner.enabled = false;
 
         if (gameOverUI != null)
-        {
-            gameOverUI.gameObject.SetActive(false);
-            _gameOverStartPos = gameOverUI.localPosition;
-            _gameOverTargetPos = _gameOverStartPos + new Vector3(0, gameOverMoveAmount, 0);
-        }
-        
-        _bestScore = PlayerPrefs.GetInt("BestScore", 0);
+            gameOverUI.SetActive(false);
 
+        _bestScore = PlayerPrefs.GetInt("BestScore", 0);
         UpdateGameplayUI();
     }
 
     void Update()
     {
-        if (!_isPlaying && Input.GetKeyDown(KeyCode.Space))
+        
+        if (!_isPlaying && Input.GetKeyDown(KeyCode.Space) && !_isGameOver)
         {
             StartGame();
-        }
-
-        if (_moveGameOverUI && gameOverUI != null)
-        {
-            gameOverUI.localPosition = Vector3.MoveTowards(
-                gameOverUI.localPosition,
-                _gameOverTargetPos,
-                gameOverMoveSpeed * Time.deltaTime
-            );
-
-            if (Vector3.Distance(gameOverUI.localPosition, _gameOverTargetPos) < 0.01f)
-            {
-                gameOverUI.localPosition = _gameOverTargetPos;
-                _moveGameOverUI = false;
-            }
         }
     }
 
@@ -88,7 +60,7 @@ public class GameManager : MonoBehaviour
             spawner.enabled = true;
 
         if (gameOverUI != null)
-            gameOverUI.gameObject.SetActive(false);
+            gameOverUI.SetActive(false);
 
         UpdateGameplayUI();
     }
@@ -96,7 +68,7 @@ public class GameManager : MonoBehaviour
     public void IncrementScore()
     {
         _score++;
-        
+
         if (_score > _bestScore)
         {
             _bestScore = _score;
@@ -110,16 +82,13 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         _isPlaying = false;
+        _isGameOver = true;
 
         if (gameOverUI != null)
-        {
-            gameOverUI.gameObject.SetActive(true);
-            gameOverUI.localPosition = _gameOverStartPos;
-            _moveGameOverUI = true;
-        }
-        
+            gameOverUI.SetActive(true);
+
         UpdateGameOverUI();
-        
+
         var parallaxes = FindObjectsByType<Parallax>(FindObjectsSortMode.None);
         foreach (var p in parallaxes)
             p.enabled = false;
@@ -140,21 +109,17 @@ public class GameManager : MonoBehaviour
         var spawner = FindAnyObjectByType<PipeSpawner>();
         if (spawner != null)
             spawner.enabled = false;
-        
-        GameObject.Find("Bird").transform.rotation = Quaternion.Lerp(
-            transform.rotation,
-            Quaternion.Euler(0, 0, -90),
-            0.9f
-        );
+
+        GameObject.Find("Bird").transform.rotation = Quaternion.Euler(0, 0, -90);
     }
-    
-    private void UpdateGameplayUI()
+
+    void UpdateGameplayUI()
     {
         if (scoreText != null)
             scoreText.text = _score.ToString();
     }
-    
-    private void UpdateGameOverUI()
+
+    void UpdateGameOverUI()
     {
         if (gameOverScoreText != null)
             gameOverScoreText.text = _score.ToString();
