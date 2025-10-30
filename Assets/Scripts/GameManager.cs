@@ -3,21 +3,19 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private int _score = 0;
-    [SerializeField] private Text scoreText;
+    public Text scoreText;
     public GameObject getReadySprite;
     public GameObject bird;
     public PipeSpawner spawner;
     
+    private int _score = 0;
     private bool _isPlaying = false;
     
     void Start()
     {
         getReadySprite.SetActive(true);
-        
         if (bird != null)
             bird.GetComponent<Rigidbody2D>().simulated = false;
-        
         if (spawner != null)
             spawner.enabled = false;
     }
@@ -32,8 +30,6 @@ public class GameManager : MonoBehaviour
 
     void StartGame()
     {
-        _isPlaying = true;
-        
         if (getReadySprite != null)
             getReadySprite.SetActive(false);
         
@@ -62,8 +58,11 @@ public class GameManager : MonoBehaviour
         }
         
         var bird = FindAnyObjectByType<Bird>();
+        
         if (bird != null)
+        {
             bird.enabled = false;
+        }
         
         var pipes = FindObjectsByType<MovePipe>(FindObjectsSortMode.None);
         foreach (var p in pipes)

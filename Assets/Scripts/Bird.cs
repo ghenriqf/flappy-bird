@@ -18,17 +18,17 @@ public class Bird : MonoBehaviour
     }
 
     private void Jump()
-{
-    if (Input.GetKeyDown(KeyCode.Space))
     {
-        rigidBody2d.linearVelocity = Vector2.up * jumpSpeed;
-
-        if (jumpSound != null)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            AudioSource.PlayClipAtPoint(jumpSound, Camera.main.transform.position, 0.6f);
+            rigidBody2d.linearVelocity = Vector2.up * jumpSpeed;
+
+            if (jumpSound != null)
+            {
+                AudioSource.PlayClipAtPoint(jumpSound, Camera.main.transform.position, 0.6f);
+            }
         }
     }
-}
 
     private void Update()
     {
@@ -40,11 +40,19 @@ public class Bird : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, rigidBody2d.linearVelocity.y * rotationSpeed);
     }
 
+    private bool _hasCollided = false;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (_hasCollided) return;
+
         if (collision.gameObject.CompareTag("collision"))
         {
-            FindAnyObjectByType<GameManager>().GameOver();
+            _hasCollided = true;
+
+            var gameManager = FindAnyObjectByType<GameManager>();
+            if (gameManager != null)
+                gameManager.GameOver();
 
             if (hitSound != null)
                 AudioSource.PlayClipAtPoint(hitSound, Camera.main.transform.position, 0.6f);
