@@ -6,10 +6,6 @@ public class PipeSpawner : MonoBehaviour
     [SerializeField] private float heightRange = 0.50f;
     [SerializeField] private GameObject pipe;
     private float _timer;
-    private void Start()
-    {
-        SpawnPipes();
-    }
     
     private void SpawnPipes()
     {
@@ -19,7 +15,9 @@ public class PipeSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (_timer > maxTime)
+        if (!enabled) return;
+        
+        if (_timer >= maxTime)
         {
             SpawnPipes();
             _timer = 0;
