@@ -4,8 +4,46 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private int _score = 0;
-    [SerializeField] private MovePipe pipe;
     [SerializeField] private Text scoreText;
+    public GameObject getReadySprite;
+    public GameObject bird;
+    public PipeSpawner spawner;
+    
+    private bool _isPlaying = false;
+    
+    void Start()
+    {
+        getReadySprite.SetActive(true);
+        
+        if (bird != null)
+            bird.GetComponent<Rigidbody2D>().simulated = false;
+        
+        if (spawner != null)
+            spawner.enabled = false;
+    }
+    
+    void Update()
+    {
+        if (!_isPlaying && Input.GetKeyDown(KeyCode.Space))
+        {
+            StartGame();
+        }
+    }
+
+    void StartGame()
+    {
+        _isPlaying = true;
+        
+        if (getReadySprite != null)
+            getReadySprite.SetActive(false);
+        
+        if (bird != null)
+            bird.GetComponent<Rigidbody2D>().simulated = true;
+        
+        if (spawner != null)
+            spawner.enabled = true;
+    }
+    
     public void IncrementScore()
     {
         _score++;
@@ -43,6 +81,6 @@ public class GameManager : MonoBehaviour
         
         Debug.Log("GameOver");
         
-        GameObject.Find("Bird").transform.rotation = Quaternion.Euler(0, 0, -90);
+        GameObject.Find("Bird").transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, -90), 0.9f);
     }
 }
