@@ -8,6 +8,14 @@ public class GameManager : MonoBehaviour
     public GameObject bird;
     public PipeSpawner spawner;
     
+    public RectTransform gameOverUI; // Arraste o painel do Game Over no Inspector
+    public float gameOverMoveAmount = 50f; // Quanto o canvas vai subir
+    public float gameOverMoveSpeed = 5f; // Velocidade da animação
+
+    private Vector3 _gameOverStartPos;
+    private Vector3 _gameOverTargetPos;
+    private bool _moveGameOverUI = false;
+    
     private int _score = 0;
     private bool _isPlaying = false;
     
@@ -18,6 +26,13 @@ public class GameManager : MonoBehaviour
             bird.GetComponent<Rigidbody2D>().simulated = false;
         if (spawner != null)
             spawner.enabled = false;
+        
+        if (gameOverUI != null)
+        {
+            gameOverUI.gameObject.SetActive(false); // começa desativado
+            _gameOverStartPos = gameOverUI.localPosition; // guarda a posição inicial
+            _gameOverTargetPos = _gameOverStartPos + new Vector3(0, gameOverMoveAmount, 0); // posição final
+        }
     }
     
     void Update()
@@ -26,6 +41,24 @@ public class GameManager : MonoBehaviour
         {
             StartGame();
         }
+        
+        if (_moveGameOverUI && gameOverUI != null)
+        {
+            // Move a posição atual em direção ao alvo, com velocidade constante
+            gameOverUI.localPosition = Vector3.MoveTowards(
+                gameOverUI.localPosition, 
+                _gameOverTargetPos, 
+                gameOverMoveSpeed * Time.deltaTime
+            );
+
+            // Quando chegar perto, para o movimento
+            if (Vector3.Distance(gameOverUI.localPosition, _gameOverTargetPos) < 0.01f)
+            {
+                gameOverUI.localPosition = _gameOverTargetPos;
+                _moveGameOverUI = false;
+            }
+        }
+
     }
 
     void StartGame()
@@ -51,6 +84,13 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        if (gameOverUI != null)
+        {
+            gameOverUI.gameObject.SetActive(true);   // ativa a UI
+            gameOverUI.localPosition = _gameOverStartPos; // garante que começa na posição inicial
+            _moveGameOverUI = true; // inicia a animação
+        }
+        
         var parallaxes = FindObjectsByType<Parallax>(FindObjectsSortMode.None);
         foreach (var p in parallaxes)
         {
