@@ -15,8 +15,6 @@ public class PipeSpawner : MonoBehaviour
     {
         var spawnPos = transform.position + new Vector3(0, Random.Range(-heightRange, heightRange));
         var pipeClone = Instantiate(pipe, spawnPos, Quaternion.identity);
-
-        Destroy(pipeClone, 10f);
     }
 
     private void Update()

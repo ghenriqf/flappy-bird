@@ -31,6 +31,10 @@ public class GameManager : MonoBehaviour
         foreach (var p in pipes)
         {
             p.enabled = false;
+            
+            var colliders = p.GetComponentsInChildren<Collider2D>();
+            foreach (var c in colliders)
+                c.enabled = false;
         }
         
         var spawner = FindAnyObjectByType<PipeSpawner>();
