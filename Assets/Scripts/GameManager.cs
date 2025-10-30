@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -17,6 +16,12 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        SceneManager.LoadScene("Space");
+        var pipe = GetComponent<MovePipe>();
+        if (pipe != null)
+            pipe.enabled = false;
+        
+        Debug.Log("GameOver");
+        
+        GameObject.Find("Bird").transform.rotation = Quaternion.Lerp(transform.rotation,Quaternion.Euler(0,0,-90),0.9f);
     }
 }

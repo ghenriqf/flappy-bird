@@ -12,6 +12,5 @@ public class MovePipe : MonoBehaviour
     private void Update()
     {
         Move();
-        
     }
 }
