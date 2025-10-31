@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public Text gameOverBestText;
 
     public GameObject getReadySprite;
+    public GameObject portal;
     public GameObject bird;
     public PipeSpawner spawner;
 
@@ -19,10 +20,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (_isGameOver) return;
         
-        getReadySprite.SetActive(true);
+        if (_isGameOver) return;
 
+        getReadySprite.SetActive(true);
+        
+        portal.SetActive(false);
+        
         if (bird != null)
             bird.GetComponent<Rigidbody2D>().simulated = false;
 
@@ -38,6 +42,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (_score == 1)
+        {
+            portal.SetActive(true);
+        }
+        
         
         if (!_isPlaying && Input.GetKeyDown(KeyCode.Space) && !_isGameOver)
         {
