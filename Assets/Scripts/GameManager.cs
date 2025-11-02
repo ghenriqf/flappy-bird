@@ -9,11 +9,11 @@ public class GameManager : MonoBehaviour
     public PipeSpawner spawner;
     
     public RectTransform gameOverUI; // Arraste o painel do Game Over no Inspector
-    public float gameOverMoveAmount = 50f; // Quanto o canvas vai subir
-    public float gameOverMoveSpeed = 5f; // Velocidade da animação
+    public float gameOverMoveAmount = 50f; // Distância que o Canvas irá subir (e de onde ele vai começar)
+    public float gameOverMoveSpeed = 5f; // Velocidade da animação (ajuste esse valor no Inspector!)
 
-    private Vector3 _gameOverStartPos;
-    private Vector3 _gameOverTargetPos;
+    private Vector3 _gameOverStartPos; // Posição INICIAL da animação (abaixo do alvo)
+    private Vector3 _gameOverTargetPos; // Posição FINAL da animação (posição de repouso na tela)
     private bool _moveGameOverUI = false;
     
     private int _score = 0;
@@ -21,7 +21,11 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
+        _isPlaying = false;
+        _score = 0;
+        
         getReadySprite.SetActive(true);
+        
         if (bird != null)
             bird.GetComponent<Rigidbody2D>().simulated = false;
         if (spawner != null)
@@ -30,8 +34,13 @@ public class GameManager : MonoBehaviour
         if (gameOverUI != null)
         {
             gameOverUI.gameObject.SetActive(false); // começa desativado
-            _gameOverStartPos = gameOverUI.localPosition; // guarda a posição inicial
-            _gameOverTargetPos = _gameOverStartPos + new Vector3(0, gameOverMoveAmount, 0); // posição final
+            
+            // 1. Guarda a posição FINAL (onde a UI deve parar, a posição do editor)
+            _gameOverTargetPos = gameOverUI.localPosition; 
+            
+            // 2. Define a posição INICIAL: a posição final menos o deslocamento para baixo
+            // Se o MoveAmount for 50, ele começará 50 unidades abaixo do alvo.
+            _gameOverStartPos = _gameOverTargetPos - new Vector3(0, gameOverMoveAmount, 0); 
         }
     }
     
@@ -42,6 +51,7 @@ public class GameManager : MonoBehaviour
             StartGame();
         }
         
+        // Lógica de animação da UI de Game Over
         if (_moveGameOverUI && gameOverUI != null)
         {
             // Move a posição atual em direção ao alvo, com velocidade constante
@@ -63,11 +73,17 @@ public class GameManager : MonoBehaviour
 
     void StartGame()
     {
+        _isPlaying = true;
+        
         if (getReadySprite != null)
             getReadySprite.SetActive(false);
         
         if (bird != null)
+        {
             bird.GetComponent<Rigidbody2D>().simulated = true;
+            // Opcional: Chama o método Flap no Bird se você tiver um script Bird
+            // bird.GetComponent<Bird>().Flap(); 
+        }
         
         if (spawner != null)
             spawner.enabled = true;
@@ -75,36 +91,45 @@ public class GameManager : MonoBehaviour
     
     public void IncrementScore()
     {
-        _score++;
-        if (scoreText != null)
+        if (_isPlaying)
         {
-            scoreText.text = _score.ToString();
+            _score++;
+            if (scoreText != null)
+            {
+                scoreText.text = _score.ToString();
+            }
         }
     }
 
     public void GameOver()
     {
+        _isPlaying = false;
+        
         if (gameOverUI != null)
         {
             gameOverUI.gameObject.SetActive(true);   // ativa a UI
-            gameOverUI.localPosition = _gameOverStartPos; // garante que começa na posição inicial
-            _moveGameOverUI = true; // inicia a animação
+            // Garante que a UI começa na posição INICIAL (abaixo do alvo)
+            gameOverUI.localPosition = _gameOverStartPos; 
+            _moveGameOverUI = true; // inicia a animação de subir!
         }
         
-        var parallaxes = FindObjectsByType<Parallax>(FindObjectsSortMode.None);
+        // CORRIGIDO: Removido FindObjectsSortMode.None
+        var parallaxes = FindObjectsOfType<Parallax>();
         foreach (var p in parallaxes)
         {
             p.enabled = false;
         }
         
-        var bird = FindAnyObjectByType<Bird>();
+        var birdComponent = FindAnyObjectByType<Bird>();
         
-        if (bird != null)
+        if (birdComponent != null)
         {
-            bird.enabled = false;
+            birdComponent.enabled = false;
         }
         
-        var pipes = FindObjectsByType<MovePipe>(FindObjectsSortMode.None);
+        // Desativa a movimentação e colisores dos pipes existentes
+        // CORRIGIDO: Removido FindObjectsSortMode.None
+        var pipes = FindObjectsOfType<MovePipe>();
         foreach (var p in pipes)
         {
             p.enabled = false;
@@ -120,6 +145,7 @@ public class GameManager : MonoBehaviour
         
         Debug.Log("GameOver");
         
+        // Anima a rotação do Bird para cair
         GameObject.Find("Bird").transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, -90), 0.9f);
     }
 }
