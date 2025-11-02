@@ -61,6 +61,10 @@ public class Bird : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag("portal"))
+            SceneManager.LoadScene("SecretScenes");
+        
+        
         if (other.gameObject.CompareTag("score"))
         {
             if (pointSound != null)
