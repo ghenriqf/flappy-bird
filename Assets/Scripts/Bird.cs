@@ -12,22 +12,20 @@ public class Bird : MonoBehaviour
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip pointSound;
 
+    private bool _hasCollided = false;
+
+    private GameManager gameManager;
+    private GameManagerSecret gameManagerSecret;
+
     private void Start()
     {
-        rigidBody2d = GetComponent<Rigidbody2D>();
-    }
+        if (rigidBody2d == null)
+            rigidBody2d = GetComponent<Rigidbody2D>();
 
-    private void Jump()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            rigidBody2d.linearVelocity = Vector2.up * jumpSpeed;
-
-            if (jumpSound != null)
-            {
-                AudioSource.PlayClipAtPoint(jumpSound, Camera.main.transform.position, 0.6f);
-            }
-        }
+        // tenta encontrar um dos dois game managers na cena
+        gameManager = FindAnyObjectByType<GameManager>();
+        if (gameManager == null)
+            gameManagerSecret = FindAnyObjectByType<GameManagerSecret>();
     }
 
     private void Update()
@@ -40,7 +38,16 @@ public class Bird : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, rigidBody2d.linearVelocity.y * rotationSpeed);
     }
 
-    private bool _hasCollided = false;
+    private void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rigidBody2d.linearVelocity = Vector2.up * jumpSpeed;
+
+            if (jumpSound != null)
+                AudioSource.PlayClipAtPoint(jumpSound, Camera.main.transform.position, 0.6f);
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -49,10 +56,11 @@ public class Bird : MonoBehaviour
         if (collision.gameObject.CompareTag("collision"))
         {
             _hasCollided = true;
-
-            var gameManager = FindAnyObjectByType<GameManager>();
+            
             if (gameManager != null)
                 gameManager.GameOver();
+            else if (gameManagerSecret != null)
+                gameManagerSecret.GameOver();
 
             if (hitSound != null)
                 AudioSource.PlayClipAtPoint(hitSound, Camera.main.transform.position, 0.6f);
@@ -62,16 +70,19 @@ public class Bird : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("portal"))
+        {
             SceneManager.LoadScene("SecretScenes");
-        
-        
-        if (other.gameObject.CompareTag("score"))
+        }
+
+        if (other.CompareTag("score"))
         {
             if (pointSound != null)
-            {
                 AudioSource.PlayClipAtPoint(pointSound, Camera.main.transform.position, 0.6f);
-            }
-            FindAnyObjectByType<GameManager>().IncrementScore();
+            
+            if (gameManager != null)
+                gameManager.IncrementScore();
+            else if (gameManagerSecret != null)
+                gameManagerSecret.IncrementScore();
         }
     }
 }

@@ -1,15 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManagerSecret : MonoBehaviour
 {
     public Text scoreText;
     public GameObject gameOverUI;
     public Text gameOverScoreText;
     public Text gameOverBestText;
 
-    public GameObject getReadySprite;
-    public GameObject portal;
     public GameObject bird;
     public PipeSpawner spawner;
 
@@ -20,51 +18,26 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (portal != null)
-            portal.SetActive(false);
+        if (_isGameOver) return;
 
-        if (getReadySprite != null)
-            getReadySprite.SetActive(true);
-
-        if (bird != null)
-            bird.GetComponent<Rigidbody2D>().simulated = false;
-
-        if (spawner != null)
-            spawner.enabled = false;
+        // ✅ Cena secreta começa direto (sem get ready)
+        _isPlaying = true;
 
         if (gameOverUI != null)
             gameOverUI.SetActive(false);
 
-        _bestScore = PlayerPrefs.GetInt("BestScore", 0);
-        UpdateGameplayUI();
-    }
-
-    void Update()
-    {
-        if (!_isPlaying && Input.GetKeyDown(KeyCode.Space) && !_isGameOver)
-            StartGame();
-
-        if (_score >= 10 && portal != null && !portal.activeSelf)
-            portal.SetActive(true);
-    }
-
-    void StartGame()
-    {
-        _isPlaying = true;
-        _score = 0;
-
-        if (getReadySprite != null)
-            getReadySprite.SetActive(false);
-
+        // Ativa o pássaro e o spawner imediatamente
         if (bird != null)
-            bird.GetComponent<Rigidbody2D>().simulated = true;
+        {
+            var rb = bird.GetComponent<Rigidbody2D>();
+            if (rb != null)
+                rb.simulated = true;
+        }
 
         if (spawner != null)
             spawner.enabled = true;
 
-        if (gameOverUI != null)
-            gameOverUI.SetActive(false);
-
+        _bestScore = PlayerPrefs.GetInt("BestScore", 0);
         UpdateGameplayUI();
     }
 
@@ -84,28 +57,30 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        _isPlaying = false;
+        if (_isGameOver) return;
         _isGameOver = true;
+        _isPlaying = false;
 
         if (gameOverUI != null)
             gameOverUI.SetActive(true);
 
         UpdateGameOverUI();
 
-        DisableAllGameObjects();
-
-        GameObject.Find("Bird").transform.rotation = Quaternion.Euler(0, 0, -90);
-    }
-
-    void DisableAllGameObjects()
-    {
-        foreach (var p in FindObjectsByType<Parallax>(FindObjectsSortMode.None))
+        // 🔻 Mesmo comportamento da cena normal 🔻
+        var parallaxes = FindObjectsByType<Parallax>(FindObjectsSortMode.None);
+        foreach (var p in parallaxes)
             p.enabled = false;
 
-        foreach (var pipe in FindObjectsByType<MovePipe>(FindObjectsSortMode.None))
+        var bird = FindAnyObjectByType<Bird>();
+        if (bird != null)
+            bird.enabled = false;
+
+        var pipes = FindObjectsByType<MovePipeSecret>(FindObjectsSortMode.None);
+        foreach (var p in pipes)
         {
-            pipe.enabled = false;
-            foreach (var c in pipe.GetComponentsInChildren<Collider2D>())
+            p.enabled = false;
+            var colliders = p.GetComponentsInChildren<Collider2D>();
+            foreach (var c in colliders)
                 c.enabled = false;
         }
 
@@ -113,9 +88,10 @@ public class GameManager : MonoBehaviour
         if (spawner != null)
             spawner.enabled = false;
 
-        var bird = FindAnyObjectByType<Bird>();
-        if (bird != null)
-            bird.enabled = false;
+        // faz o pássaro cair
+        GameObject birdObj = GameObject.Find("Bird");
+        if (birdObj != null)
+            birdObj.transform.rotation = Quaternion.Euler(0, 0, -90);
     }
 
     void UpdateGameplayUI()
