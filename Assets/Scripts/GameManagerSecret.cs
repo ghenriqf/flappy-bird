@@ -13,29 +13,11 @@ public class GameManagerSecret : MonoBehaviour
 
     private int _score = 0;
     private int _bestScore = 0;
-    private bool _isPlaying = false;
     private bool _isGameOver = false;
 
     void Start()
     {
-        if (_isGameOver) return;
-
-        // ✅ Cena secreta começa direto (sem get ready)
-        _isPlaying = true;
-
-        if (gameOverUI != null)
-            gameOverUI.SetActive(false);
-
-        // Ativa o pássaro e o spawner imediatamente
-        if (bird != null)
-        {
-            var rb = bird.GetComponent<Rigidbody2D>();
-            if (rb != null)
-                rb.simulated = true;
-        }
-
-        if (spawner != null)
-            spawner.enabled = true;
+        gameOverUI.SetActive(false);
 
         _bestScore = PlayerPrefs.GetInt("BestScore", 0);
         UpdateGameplayUI();
@@ -59,21 +41,12 @@ public class GameManagerSecret : MonoBehaviour
     {
         if (_isGameOver) return;
         _isGameOver = true;
-        _isPlaying = false;
-
-        if (gameOverUI != null)
-            gameOverUI.SetActive(true);
-
-        UpdateGameOverUI();
-
-        // 🔻 Mesmo comportamento da cena normal 🔻
+        
+        gameOverUI.SetActive(true);
+        
         var parallaxes = FindObjectsByType<Parallax>(FindObjectsSortMode.None);
         foreach (var p in parallaxes)
             p.enabled = false;
-
-        var bird = FindAnyObjectByType<Bird>();
-        if (bird != null)
-            bird.enabled = false;
 
         var pipes = FindObjectsByType<MovePipeSecret>(FindObjectsSortMode.None);
         foreach (var p in pipes)
@@ -87,11 +60,12 @@ public class GameManagerSecret : MonoBehaviour
         var spawner = FindAnyObjectByType<PipeSpawner>();
         if (spawner != null)
             spawner.enabled = false;
-
-        // faz o pássaro cair
-        GameObject birdObj = GameObject.Find("Bird");
-        if (birdObj != null)
-            birdObj.transform.rotation = Quaternion.Euler(0, 0, -90);
+        
+        var bird = FindAnyObjectByType<Bird>();
+        bird.enabled = false;
+        bird.transform.rotation = Quaternion.Euler(0, 0, -90);
+        
+        UpdateGameOverUI();
     }
 
     void UpdateGameplayUI()
@@ -102,10 +76,7 @@ public class GameManagerSecret : MonoBehaviour
 
     void UpdateGameOverUI()
     {
-        if (gameOverScoreText != null)
-            gameOverScoreText.text = _score.ToString();
-
-        if (gameOverBestText != null)
-            gameOverBestText.text = _bestScore.ToString();
+        gameOverScoreText.text = _score.ToString();
+        gameOverBestText.text = _bestScore.ToString();
     }
 }

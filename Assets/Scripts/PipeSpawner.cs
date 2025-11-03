@@ -10,6 +10,7 @@ public class PipeSpawner : MonoBehaviour
     private void SpawnPipes()
     {
         var spawnPos = transform.position + new Vector3(0, Random.Range(-heightRange, heightRange));
+        // Quaternion.identity representa a rotação nula ou sem rotação
         var pipeClone = Instantiate(pipe, spawnPos, Quaternion.identity);
     }
 

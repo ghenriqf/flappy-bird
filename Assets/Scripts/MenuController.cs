@@ -15,11 +15,13 @@ public class MenuController : MonoBehaviour
     void LoadSceneWithClick(string sceneName)
     {
         PlayClickSound();
+        // método da Unity usado para iniciar uma Coroutine
         StartCoroutine(DelayedLoad(sceneName, 0.5f));
     }
 
     IEnumerator DelayedLoad(string sceneName, float delay)
     {
+        // yield palavra-chave do C# usada para pausar a execução de uma função
         yield return new WaitForSeconds(delay);
         SceneManager.LoadScene(sceneName);
     }

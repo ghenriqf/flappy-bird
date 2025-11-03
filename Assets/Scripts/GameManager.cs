@@ -20,22 +20,16 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (portal != null)
-            portal.SetActive(false);
+        portal.SetActive(false);
+        getReadySprite.SetActive(true);
+        gameOverUI.SetActive(false);
+        
+        bird.GetComponent<Rigidbody2D>().simulated = false;
+        spawner.enabled = false;
 
-        if (getReadySprite != null)
-            getReadySprite.SetActive(true);
-
-        if (bird != null)
-            bird.GetComponent<Rigidbody2D>().simulated = false;
-
-        if (spawner != null)
-            spawner.enabled = false;
-
-        if (gameOverUI != null)
-            gameOverUI.SetActive(false);
-
+        // PlayerPrefs é uma forma de armazenar dados simples de forma persistente no Unity
         _bestScore = PlayerPrefs.GetInt("BestScore", 0);
+        
         UpdateGameplayUI();
     }
 
@@ -44,7 +38,7 @@ public class GameManager : MonoBehaviour
         if (!_isPlaying && Input.GetKeyDown(KeyCode.Space) && !_isGameOver)
             StartGame();
 
-        if (_score >= 10 && portal != null && !portal.activeSelf)
+        if (_score == 30 && !portal.activeSelf)
             portal.SetActive(true);
     }
 
@@ -52,19 +46,14 @@ public class GameManager : MonoBehaviour
     {
         _isPlaying = true;
         _score = 0;
-
-        if (getReadySprite != null)
-            getReadySprite.SetActive(false);
-
-        if (bird != null)
-            bird.GetComponent<Rigidbody2D>().simulated = true;
-
-        if (spawner != null)
-            spawner.enabled = true;
-
-        if (gameOverUI != null)
-            gameOverUI.SetActive(false);
-
+        
+        getReadySprite.SetActive(false);
+        gameOverUI.SetActive(false);
+        
+        bird.GetComponent<Rigidbody2D>().simulated = true;
+        
+        spawner.enabled = true;
+        
         UpdateGameplayUI();
     }
 
@@ -86,12 +75,10 @@ public class GameManager : MonoBehaviour
     {
         _isPlaying = false;
         _isGameOver = true;
-
-        if (gameOverUI != null)
-            gameOverUI.SetActive(true);
+        
+        gameOverUI.SetActive(true);
 
         UpdateGameOverUI();
-
         DisableAllGameObjects();
 
         GameObject.Find("Bird").transform.rotation = Quaternion.Euler(0, 0, -90);
@@ -106,30 +93,26 @@ public class GameManager : MonoBehaviour
         {
             pipe.enabled = false;
             foreach (var c in pipe.GetComponentsInChildren<Collider2D>())
+            {
                 c.enabled = false;
+            }
         }
 
         var spawner = FindAnyObjectByType<PipeSpawner>();
-        if (spawner != null)
-            spawner.enabled = false;
+        spawner.enabled = false;
 
         var bird = FindAnyObjectByType<Bird>();
-        if (bird != null)
-            bird.enabled = false;
+        bird.enabled = false;
     }
 
     void UpdateGameplayUI()
     {
-        if (scoreText != null)
-            scoreText.text = _score.ToString();
+        scoreText.text = _score.ToString();
     }
 
     void UpdateGameOverUI()
     {
-        if (gameOverScoreText != null)
-            gameOverScoreText.text = _score.ToString();
-
-        if (gameOverBestText != null)
-            gameOverBestText.text = _bestScore.ToString();
+        gameOverScoreText.text = _score.ToString();
+        gameOverBestText.text = _bestScore.ToString();
     }
 }

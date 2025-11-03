@@ -8,14 +8,13 @@ public class ParallaxMenu : MonoBehaviour
 
     private void Update()
     {
-        if (rawImage)
-        {
-            rawImage.uvRect = new Rect(
-                rawImage.uvRect.x + animationSpeed * Time.deltaTime, 
-                rawImage.uvRect.y, 
-                rawImage.uvRect.width, 
-                rawImage.uvRect.height
-            );
-        }
+        // uvRect define qual parte da textura é exibida pelo RawImage
+        rawImage.uvRect = new Rect(
+            rawImage.uvRect.x + animationSpeed * Time.deltaTime, 
+            rawImage.uvRect.y, 
+            rawImage.uvRect.width, 
+            rawImage.uvRect.height
+        );
+        
     }
 }
