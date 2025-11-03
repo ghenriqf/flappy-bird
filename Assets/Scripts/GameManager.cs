@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
         if (_isGameOver) return;
 
         getReadySprite.SetActive(true);
@@ -42,11 +41,10 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (_score == 1)
+        if (_score == 5)
         {
             portal.SetActive(true);
         }
-        
         
         if (!_isPlaying && Input.GetKeyDown(KeyCode.Space) && !_isGameOver)
         {

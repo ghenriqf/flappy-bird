@@ -1,0 +1,19 @@
+using UnityEngine;
+
+public class MovePortal : MonoBehaviour
+{
+    [SerializeField]  private float speed = 0.75f;
+
+    private void Move()
+    {
+        transform.position +=  Vector3.left * (speed * Time.deltaTime);
+    }
+
+    private void Update()
+    {
+        Move();
+        
+        if (transform.position.x < -4f)
+            Destroy(gameObject);
+    }
+}
