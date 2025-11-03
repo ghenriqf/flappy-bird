@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (_score == 5)
+        if (_score == 10)
         {
             portal.SetActive(true);
         }
