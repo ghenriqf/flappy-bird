@@ -1,20 +1,41 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class MenuController : MonoBehaviour
 {
-    public void OkButton()
+    public AudioClip clickSound;
+
+    void PlayClickSound()
     {
-        SceneManager.LoadScene("Level1");
+        if (clickSound != null)
+            AudioSource.PlayClipAtPoint(clickSound, Camera.main.transform.position);
+    }
+
+    void LoadSceneWithClick(string sceneName)
+    {
+        PlayClickSound();
+        StartCoroutine(DelayedLoad(sceneName, 0.5f));
+    }
+
+    IEnumerator DelayedLoad(string sceneName, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(sceneName);
     }
     
-    public void MenuButton() 
+    public void OkButton()
+    {  
+        LoadSceneWithClick("Level1");
+    }
+
+    public void MenuButton()
     {
-        SceneManager.LoadScene("MainMenu");
+        LoadSceneWithClick("MainMenu");
     }
 
     public void StartButton()
     {
-        SceneManager.LoadScene("Level1");
+        LoadSceneWithClick("Level1");
     }
 }
